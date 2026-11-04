@@ -1,4 +1,4 @@
-import { FuzzySuggestModal, Notice, PluginSettingTab, SecretComponent, Setting, requestUrl, type App } from 'obsidian';
+import { FuzzySuggestModal, Notice, PluginSettingTab, Setting, requestUrl, type App } from 'obsidian';
 import type WordplayPlugin from './main';
 import { chat, type Brain } from './ai';
 import { newId } from './items';
@@ -7,8 +7,8 @@ import type { BrainSlot } from './passes';
 export interface CustomPass { id: string; name: string; instruction: string; target: 'sentences' | 'spans'; brain: Brain }
 
 export interface WordplaySettings {
-  /** the name of the OpenRouter key in Obsidian's keychain (the key itself never sits in data.json) */
-  keySecret: string;
+  /** your OpenRouter API key (sk-or-…), kept in this plugin's data.json, which git ignores */
+  apiKey: string;
   quickModel: string;
   smartModel: string;
   baseUrl: string;
@@ -25,7 +25,7 @@ export interface WordplaySettings {
 }
 
 export const DEFAULT_SETTINGS: WordplaySettings = {
-  keySecret: '',
+  apiKey: '',
   quickModel: 'anthropic/claude-haiku-5.5',
   smartModel: 'anthropic/claude-sonnet-5.5',
   baseUrl: 'https://openrouter.ai/api/v1',
@@ -61,10 +61,19 @@ export class WordplaySettingTab extends PluginSettingTab {
     containerEl.addClass('wp-settings');
 
     new Setting(containerEl).setName('The AI').setHeading();
+    let keyInput: HTMLInputElement | null = null;
     new Setting(containerEl)
-      .setName('OpenRouter key')
-      .setDesc("Kept in Obsidian's keychain, not in this plugin's settings file. Get one at openrouter.ai/keys.")
-      .addComponent((el) => new SecretComponent(this.app, el).setValue(s.keySecret).onChange(async (v) => { s.keySecret = v ?? ''; await save(); }));
+      .setName('OpenRouter API key')
+      .setDesc('Paste the key from openrouter.ai/keys. It starts with sk-or-.')
+      .addText((t) => {
+        keyInput = t.inputEl;
+        t.inputEl.type = 'password';
+        t.inputEl.addClass('wp-key');
+        t.setPlaceholder('sk-or-…').setValue(s.apiKey).onChange(async (v) => { s.apiKey = v.trim(); await save(); });
+      })
+      .addExtraButton((b) => b.setIcon('eye').setTooltip('Show or hide').onClick(() => {
+        if (keyInput) keyInput.type = keyInput.type === 'password' ? 'text' : 'password';
+      }));
 
     const model = (name: string, desc: string, key: 'quickModel' | 'smartModel') => {
       let text: { setValue(v: string): unknown } | null = null;

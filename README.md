@@ -57,7 +57,7 @@ Bring your own OpenRouter key and pick two models:
 - **Smart (smarty pants mode)**: anything a sentence or longer, trims, the judgment calls. Default `anthropic/claude-sonnet-5.5`, about a cent (a whole-note trim, a few cents)
 
 Settings → Wordplay → *Which brain for what* moves any job between them. *About your writing* goes with every ask.
-The key lives in Obsidian's keychain (Settings → Keychain), never in a plugin file.
+Paste the key (it starts with `sk-or-`) into Settings → Wordplay. It's saved in this plugin's `data.json`, which git never sees.
 
 ## With Lock In and Robsidian
 

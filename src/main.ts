@@ -433,6 +433,7 @@ export default class WordplayPlugin extends Plugin {
     const raw = ((await this.loadData()) ?? {}) as Partial<Data>;
     const saved = (raw.settings ?? {}) as Partial<WordplaySettings>;
     this.settings = { ...DEFAULT_SETTINGS, ...saved, brains: { ...DEFAULT_SETTINGS.brains, ...(saved.brains ?? {}) }, customPasses: saved.customPasses ?? [] };
+    delete (this.settings as { keySecret?: string }).keySecret; // the old keychain setting, now unused
     this.data = { files: raw.files ?? {}, scratchpads: raw.scratchpads ?? {} };
     this.editMode = !!raw.editMode;
   }
@@ -459,9 +460,7 @@ export default class WordplayPlugin extends Plugin {
   }
 
   apiKey(): string | null {
-    const id = this.settings.keySecret;
-    if (!id) return null;
-    try { return this.app.secretStorage?.getSecret(id) ?? null; } catch { return null; }
+    return this.settings.apiKey.trim() || null;
   }
 
   complain(e: unknown): void {
