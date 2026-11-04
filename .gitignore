@@ -1,0 +1,12 @@
+# npm
+node_modules
+
+# build
+main.js
+*.js.map
+tests/.out/
+
+# settings and your choices live here once installed; never in git
+data.json
+data.json.*
+.DS_Store
