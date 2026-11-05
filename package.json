@@ -1,8 +1,8 @@
 {
   "name": "wordplay",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
-  "description": "Wordplay, Rob's editing playground for Obsidian: alternatives, ghosts, a scratchpad, and passes.",
+  "description": "An editing playground for Obsidian: alternatives, ghosts, a scratchpad, and passes.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

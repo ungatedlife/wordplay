@@ -1,7 +1,7 @@
 {
 	"id": "wordplay",
 	"name": "Wordplay",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"minAppVersion": "1.13.2",
 	"description": "An editing playground. Alternatives for any word, sentence or paragraph (yours or the AI's), ghosts, a scratchpad, and passes that mark and trim. Nothing is final until you say so.",
 	"author": "Rob Hardy, after Jason Fried's Write_On",
