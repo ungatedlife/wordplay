@@ -1,7 +1,7 @@
 /**
  * Every note can have a scratchpad: a note of its own where stashed bits wait, out of the draft
  * but never thrown away. It lives in one folder (Scratchpads/ by default), named after its note,
- * and links back to it. No status, so it never ships.
+ * and links back to it.
  *
  *   %% stashed 2026-11-03 22:42 %%
  *   the bit you stashed

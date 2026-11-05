@@ -63,7 +63,7 @@ export const PASSES: PassDef[] = [
   {
     id: 'overexplain', name: 'Mark where it over-explains', kind: 'mark', target: 'sentences', brain: 'judgment',
     blurb: 'Explanation burying the spark: restating, justifying, telling what was already shown.',
-    instruction: "Mark sentences that over-explain: they restate the point, justify what didn't need it, or explain what was already clear, until the live idea gets buried. This writer's known failure mode is exactly this, so look hard, but only mark what's really padding.",
+    instruction: "Mark sentences that over-explain: they restate the point, justify what didn't need it, or explain what was already clear, until the live idea gets buried. Look hard, but only mark what's really padding.",
   },
 ];
 

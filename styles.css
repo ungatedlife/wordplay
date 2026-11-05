@@ -1,5 +1,5 @@
 /* Wordplay — an editing playground. Everything leans on the theme's own variables,
-   so it sits right in Baseline's ink and the paper snippet's beige alike.
+   so it sits right in any theme, light or dark.
    Override any of these in a snippet to change the pens. */
 body {
   --wp-color-original: var(--text-faint);

@@ -13,6 +13,19 @@ Try things. Nothing is final until you say so, and ⌘Z takes back anything you 
 | **Scratchpad** | ⌃⇧X stashes a bit out of the draft into the note's scratchpad. Out of sight, never gone |
 | **Passes** | ⌃⇧L, or the PASSES chip at the bottom. Typos, weakest sentences, long ones, tangles, tone, hedges, over-explaining, and trims from 10% to half |
 
+## Install
+
+It's early (0.1), and so far it's only been tested on a Mac. It isn't in Obsidian's plugin directory yet.
+
+- **With [BRAT](https://github.com/TfTHacker/obsidian42-brat):** *Add beta plugin* → `ungatedlife/wordplay`.
+- **By hand:** from the [latest release](https://github.com/ungatedlife/wordplay/releases/latest), put `main.js`,
+  `manifest.json` and `styles.css` in a folder called `wordplay` inside your vault's `.obsidian/plugins/`.
+
+Then Settings → Community plugins → turn on **Wordplay**. Your own alternatives, ghosts and the scratchpad work
+on their own. The AI parts (AI alternatives, `??`, passes) need an [OpenRouter](https://openrouter.ai/keys) key,
+pasted into Settings → Wordplay, and you pay OpenRouter for what you use. Tell it about your writing in
+*About your writing*, so the ideas sound like you.
+
 ## The pens
 
 Every spot with alternatives gets a slightly wobbly underline, like an editor's pen:
@@ -59,13 +72,11 @@ Bring your own OpenRouter key and pick two models:
 Settings → Wordplay → *Which brain for what* moves any job between them. *About your writing* goes with every ask.
 Paste the key (it starts with `sk-or-`) into Settings → Wordplay. It's saved in this plugin's `data.json`, which git never sees.
 
-## With Lock In and Robsidian
+## With Lock In
 
-Edit mode and writing are different rooms. While Lock In's **fuse** is lit, edit mode steps out and won't come back
-until the session ends: stopping to fiddle would burn the draft. Lock In's locks are fine; edit with the note locked.
-Robsidian's writer mode hides the status bar, but the passes chip stays.
-
-Scratchpads live in `Scratchpads/` with no status, so the site never publishes them.
+Edit mode and writing are different rooms. If you use [Lock In](https://github.com/ungatedlife/dangerzone), edit mode
+steps out while its **fuse** is lit and won't come back until the session ends: stopping to fiddle would burn the draft.
+Its locks are fine; edit with the note locked.
 
 ## Keys
 
@@ -91,15 +102,14 @@ npm test                       # the engine: swaps, nesting, explode + undo, sav
 npm run try                    # a sandbox Obsidian with a pretend AI; your real one is untouched
 ```
 
-The repo is symlinked into the vault, like Lock In:
+To work on it, clone the repo straight into a vault's `.obsidian/plugins/wordplay` (or symlink it there), then
+`npm run dev` rebuilds as you go. `WP_LOOK_LIKE=/path/to/your/vault/.obsidian npm run try` dresses the sandbox in your theme.
 
-```
-The Conversation/.obsidian/plugins/wordplay → Rob HQ/Code/Obsidian/wordplay
-```
-
-Your choices and ghosts are saved in `data.json` here (never in git), keyed by note, and find their words again if
-the note changes on disk. Nothing is ever written into the note itself.
+Your choices and ghosts are saved in the plugin's `data.json` (never in git), keyed by note, and find their words again
+if the note changes on disk. Nothing is ever written into the note itself.
 
 ## Thanks
 
 To Jason Fried for Write_On and the video, and for the two tones and the wobbly lines.
+
+Made by [Rob Hardy](https://www.conversation.quest). MIT license.

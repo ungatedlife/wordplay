@@ -1,6 +1,7 @@
 // A sandbox to play in: a throwaway vault, a separate Obsidian (its own settings, so your real one
 // is untouched), a pretend OpenRouter, and this build of Wordplay. `npm run try`.
 //   WP_SANDBOX=/some/dir   where the sandbox lives (default: your temp folder)
+//   WP_LOOK_LIKE=/path/to/vault/.obsidian   copy that vault's theme, snippets and appearance (read only)
 //   --prepare              build the sandbox but don't launch anything
 import fs from 'node:fs';
 import os from 'node:os';
@@ -14,7 +15,7 @@ const vault = path.join(root, 'vault');
 const userData = path.join(root, 'obsidian-userdata');
 const mockPort = Number(process.env.WP_MOCK_PORT ?? 8787);
 const cdpPort = Number(process.env.WP_CDP_PORT ?? 9333);
-const realVault = path.join(os.homedir(), 'Local Shit', 'The Conversation', '.obsidian');
+const realVault = process.env.WP_LOOK_LIKE;
 
 const SAMPLE = `---
 status: gestating
@@ -39,11 +40,11 @@ for (const f of ['main.js', 'manifest.json', 'styles.css']) write(path.join(plug
 const dataPath = path.join(plug, 'data.json');
 if (!fs.existsSync(dataPath)) write(dataPath, JSON.stringify({ settings: { baseUrl: `http://127.0.0.1:${mockPort}/v1` }, files: {}, scratchpads: {}, editMode: false }, null, 2));
 write(path.join(vault, '.obsidian', 'community-plugins.json'), JSON.stringify(['wordplay']));
-// look like home: Rob's theme, snippet and fonts, copied (read only) from the real vault if it's here
-if (fs.existsSync(realVault)) {
-  copyDir(path.join(realVault, 'themes', 'Baseline'), path.join(vault, '.obsidian', 'themes', 'Baseline'));
-  copyDir(path.join(realVault, 'snippets'), path.join(vault, '.obsidian', 'snippets'));
+// look like home: your vault's theme, snippets and appearance, copied (read only) if WP_LOOK_LIKE points at it
+if (realVault && fs.existsSync(path.join(realVault, 'appearance.json'))) {
   const appearance = JSON.parse(fs.readFileSync(path.join(realVault, 'appearance.json'), 'utf8'));
+  if (appearance.cssTheme) copyDir(path.join(realVault, 'themes', appearance.cssTheme), path.join(vault, '.obsidian', 'themes', appearance.cssTheme));
+  copyDir(path.join(realVault, 'snippets'), path.join(vault, '.obsidian', 'snippets'));
   write(path.join(vault, '.obsidian', 'appearance.json'), JSON.stringify({ ...appearance, showViewHeader: true }, null, 2));
 }
 write(path.join(vault, '.obsidian', 'app.json'), JSON.stringify({ livePreview: true, showInlineTitle: true }));

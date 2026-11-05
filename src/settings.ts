@@ -31,7 +31,7 @@ export const DEFAULT_SETTINGS: WordplaySettings = {
   baseUrl: 'https://openrouter.ai/api/v1',
   brains: { words: 'quick', rewrites: 'smart', typos: 'quick', mechanical: 'quick', judgment: 'smart', trim: 'smart' },
   count: 5,
-  voice: "Plain, warm, alive, a little irreverent. Honest over polished. My failure mode is over-explaining until the live idea is buried, so protect the spark: cut explanation, don't add it.",
+  voice: '',
   sounds: true,
   explosions: true,
   volume: 0.5,
@@ -105,6 +105,7 @@ export class WordplaySettingTab extends PluginSettingTab {
       .setName('About your writing')
       .setDesc('Goes with every ask, so the ideas sound like you.')
       .addTextArea((t) => {
+        t.setPlaceholder('e.g. Plain, warm, a little irreverent. I over-explain, so cut explanation, never add it.');
         t.setValue(s.voice).onChange(async (v) => { s.voice = v; await save(); });
         t.inputEl.rows = 4;
         t.inputEl.addClass('wp-settings-wide');
@@ -140,7 +141,7 @@ export class WordplaySettingTab extends PluginSettingTab {
         .onChange(async (v) => { s.cycleKeys = v as WordplaySettings['cycleKeys']; await save(); }));
 
     new Setting(containerEl).setName('Scratchpads').setHeading();
-    new Setting(containerEl).setName('Folder').setDesc("Where each note's scratchpad lives. They have no status, so they never ship.")
+    new Setting(containerEl).setName('Folder').setDesc("Where each note's scratchpad lives. Each one links back to its note.")
       .addText((t) => t.setPlaceholder('Scratchpads').setValue(s.scratchFolder).onChange(async (v) => { s.scratchFolder = v.trim() || 'Scratchpads'; await save(); }));
 
     new Setting(containerEl).setName('Your own passes').setDesc('They show up under the built-in ones.').setHeading();

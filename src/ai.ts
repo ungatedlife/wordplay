@@ -31,7 +31,7 @@ export async function chat(plugin: WordplayPlugin, brain: Brain, messages: Messa
       contentType: 'application/json',
       headers: {
         ...(key ? { Authorization: `Bearer ${key}` } : {}),
-        'HTTP-Referer': 'https://www.conversation.quest',
+        'HTTP-Referer': 'https://github.com/ungatedlife/wordplay',
         'X-Title': 'Wordplay',
       },
       body: JSON.stringify({ model, messages, temperature: opts.temperature ?? 0.8, max_tokens: opts.maxTokens ?? 1500 }),
